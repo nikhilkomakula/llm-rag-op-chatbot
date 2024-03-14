@@ -22,6 +22,11 @@ jobs:
         run: |
           apk add git-lfs
           git lfs install
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: LFS Track
         run: |
@@ -29,11 +34,6 @@ jobs:
       
       - name: Checkout LFS objects
         run: git lfs checkout
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Add remote
         env:
