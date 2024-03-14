@@ -1,5 +1,3 @@
-i
-
 # OpenPages IntelliBot
 
 Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered by the state-of-the-art Retrieval-Augmented Generation (RAG) technique and Large Language Model (LLM).
@@ -83,7 +81,7 @@ python app.py
 docker build --tag <docker_id>/llm-rag-op-chatbot .
 ```
 
-**Step 2:** Run container (replace `<docker_id>` with your Docker ID and `api_token` with your Hugging Face API Token)
+**Step 2:** Run container (replace `<docker_id>` with your Docker ID)
 
 ```python
 docker run -it -d --name llm-rag-op-chatbot -p 5555:5555 -e HUGGINGFACEHUB_API_TOKEN=<api_token> <docker_id>/llm-rag-op-chatbot:latest
