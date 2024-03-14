@@ -20,7 +20,7 @@ jobs:
 
       - name: LFS Install
         run: |
-          apt-get install git-lfs
+          apk add git-lfs
           git lfs install
       
       - name: LFS Track
