@@ -16,13 +16,13 @@ jobs:
 
       - name: Add remote
         env:
-          HF: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
+          HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
         run: |
-          git remote add space https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || echo "Remote already exists"
+          git remote add space https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || true
 
       - name: Push to hub
         env:
-          HF: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
+          HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
         run: |
           git push --force https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot main
           exit 0
