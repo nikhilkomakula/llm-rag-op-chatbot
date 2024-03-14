@@ -9,6 +9,22 @@ jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
     steps:
+      - name: reset commit
+        run: |
+          git filter-branch --force --index-filter "git rm --cached --ignore-unmatch 'data/9.0 administrators_guide.pdf'" --prune-empty --tag-name-filter cat -- --all && \
+          git filter-branch --force --index-filter "git rm --cached --ignore-unmatch indexes/chroma.sqlite3" --prune-empty --tag-name-filter cat -- --all
+
+      - name: LFS Install
+        run: git lfs install
+      
+      - name: LFS Track
+        run: |
+          git lfs track "data/9.0 administrators_guide.pdf" && \
+          git lfs track indexes/chroma.sqlite3
+      
+      - name: Checkout LFS objects
+        run: git lfs checkout
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
