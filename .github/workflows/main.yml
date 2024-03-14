@@ -14,7 +14,7 @@ jobs:
         run: git lfs install
       
       - name: LFS Track
-        run: git lfs track "data/9.0 administrators_guide.pdf" && git lfs track indexes/chroma.sqlite3
+        run: git lfs track "data/9.0 administrators_guide.pdf" && git lfs track "indexes/chroma.sqlite3"
       
       - name: Checkout LFS objects
         run: git lfs checkout
