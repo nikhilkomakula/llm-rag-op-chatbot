@@ -8,13 +8,24 @@ on:
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
+    container: alpine:latest
     steps:
+      # Git is required so that actions/checkout does a proper Git checkout
+      # instead of using the GitHub REST API.
+      - name: Install Git in container
+        run: |
+          apk update
+          apk add git
+          # one time fix to avoid permission problems later on
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: LFS Install
         run: git lfs install
       
       - name: LFS Track
-        run: git lfs track "data/9.0 administrators_guide.pdf" && git lfs track "indexes/chroma.sqlite3"
+        run: |
+          git lfs track "data/9.0 administrators_guide.pdf" && \
+          git lfs track "indexes/chroma.sqlite3"
       
       - name: Checkout LFS objects
         run: git lfs checkout
