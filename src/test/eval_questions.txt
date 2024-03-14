@@ -1,0 +1,10 @@
+What is FastMap?
+What is a Role Template?
+What is the purpose of Object Reset?
+What is the purpose of Reporting Periods?
+List the system variables used in Expressions.
+Provide the steps to configure Watson Assistant in OpenPages?
+What is the difference between PRE and POST position in Triggers?
+What are the features of Operational Risk Management in OpenPages?
+What are the different permissions that can be delegated to a user group administrator?
+What are the different access controls available for non-participants for a standard stage within a workflow?
