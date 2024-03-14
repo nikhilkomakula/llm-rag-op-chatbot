@@ -20,4 +20,4 @@ if __name__ == "__main__":
         evaluate_rag("qa_chain", qa_chain)
     else:
         set_global_qa_chain(qa_chain)
-        create_chatinterface(generate_response).launch(server_name="0.0.0.0", server_port=5555)
+        create_chatinterface(generate_response).launch(server_name="0.0.0.0", server_port=7860)

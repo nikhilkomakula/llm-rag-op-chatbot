@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Expose the port on which your application runs inside the container
-EXPOSE 5555
+EXPOSE 7860
 
 # Use ENTRYPOINT to specify the command to run when the container starts
 ENTRYPOINT ["python", "app.py"]

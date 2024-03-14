@@ -84,7 +84,7 @@ docker build --tag <docker_id>/llm-rag-op-chatbot .
 **Step 2:** Run container (replace `<docker_id>` with your Docker ID)
 
 ```python
-docker run -it -d --name llm-rag-op-chatbot -p 5555:5555 -e HUGGINGFACEHUB_API_TOKEN=<api_token> <docker_id>/llm-rag-op-chatbot:latest
+docker run -it -d --name llm-rag-op-chatbot -p 7860:7860 -e HUGGINGFACEHUB_API_TOKEN=<api_token> <docker_id>/llm-rag-op-chatbot:latest
 ```
 
 **Note 1:** List all containers
