@@ -13,8 +13,7 @@ RUN pip install --upgrade pip && \
 # install git & git-lfs
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y git && \
-    apt-get install -y git-lfs
+    apt-get install -y git
 
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
@@ -31,11 +30,7 @@ WORKDIR $HOME/app
 
 # Expose the secret HUGGINGFACEHUB_API_TOKEN at buildtime and use its value to clone the repo
 RUN --mount=type=secret,id=HUGGINGFACEHUB_API_TOKEN,mode=0444,required=true \
-    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot $HOME/app
-
-# After cloning, navigate into the repository directory and pull Git LFS files
-RUN cd $HOME/app && \
-    git lfs pull
+    git clone --depth 1 https://github.com/nikhilkomakula/llm-rag-op-chatbot.git $HOME/app
 
 # Use ENTRYPOINT to specify the command to run when the container starts
 ENTRYPOINT ["python", "app.py"]
