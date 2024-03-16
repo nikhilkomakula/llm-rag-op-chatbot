@@ -38,11 +38,10 @@ COPY --chown=user app.py $HOME/app
 COPY --chown=user src $HOME/app/src
 COPY --chown=user indexes $HOME/app/indexes
 
-# Copy git lfs files and pull them
-RUN cd /code/llm-rag-op-chatbot2/indexes && \
-    git lfs pull -I "indexes/chroma.sqlite3" && \
-    cd c607d7bb-5476-4bdc-8df3-36895a74111c && \
-    git lfs pull -I "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"
-
 # Use ENTRYPOINT to specify the command to run when the container starts
 ENTRYPOINT ["python", "app.py"]
+
+# Download LFS files
+RUN echo "Downloading LFS files..." && \
+    cd /code/llm-rag-op-chatbot2/indexes && \
+    git lfs pull
