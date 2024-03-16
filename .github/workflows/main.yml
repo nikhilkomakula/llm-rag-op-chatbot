@@ -20,6 +20,7 @@ jobs:
             Dockerfile
             requirements.txt
           sparse-checkout-cone-mode: false
+          fetch-depth: 0
 
       - name: Add remote
         env:
