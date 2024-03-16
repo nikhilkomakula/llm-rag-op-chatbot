@@ -7,7 +7,8 @@ WORKDIR /code
 COPY requirements.txt ./
 
 # Upgrade pip and install dependencies
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # install git & git-lfs
 RUN apt-get update && \
@@ -16,8 +17,8 @@ RUN apt-get update && \
     apt-get install -y git-lfs
 
 # Expose the secret SECRET_EXAMPLE at buildtime and use its value to clone the repo
-RUN --mount=type=secret,id=HF_TOKEN,mode=0444,required=true \
-    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HF_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 /code/llm-rag-op-chatbot1
+RUN --mount=type=secret,id=HUGGINGFACEHUB_API_TOKEN,mode=0444,required=true \
+    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 /code/llm-rag-op-chatbot1
 
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
