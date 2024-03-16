@@ -15,10 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            images
             README.md
-            Dockerfile
-            requirements.txt
           fetch-depth: 0
 
       - name: Add remote
