@@ -45,3 +45,4 @@ ENTRYPOINT ["python", "app.py"]
 RUN echo "Downloading LFS files..." && \
     cd /code/llm-rag-op-chatbot3/indexes && \
     git lfs pull
+
