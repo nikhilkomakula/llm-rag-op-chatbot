@@ -5,10 +5,11 @@ USER user
 
 WORKDIR /app
 
-# Copy the application files into the container
-COPY app.py requirements.txt /app/
-
 RUN chown -R user:user /app
+
+# Copy the application files into the container
+COPY --chown=user:user requirements.txt /app/
+COPY --chown=user:user app.py /app/
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
