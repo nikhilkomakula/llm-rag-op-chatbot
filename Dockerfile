@@ -1,18 +1,21 @@
 FROM python:3.11.5-slim
 
-WORKDIR /app
+RUN useradd -m -u 1000 user
+USER user
 
-# Create a cache directory and grant permissions
-RUN mkdir /app/.cache && chmod 777 /app/.cache
+WORKDIR /app
 
 # Copy the application files into the container
 COPY app.py requirements.txt /app/
-COPY src /app/src
-COPY indexes /app/indexes
+
+RUN chown -R user:user /app
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
+
+COPY --chown=user:user src /app/src
+COPY --chown=user:user indexes /app/indexes
 
 # Expose the port on which your application runs inside the container
 EXPOSE 7860
