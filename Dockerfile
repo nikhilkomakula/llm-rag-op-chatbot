@@ -28,10 +28,10 @@ COPY --chown=user src $HOME/app/src
 COPY --chown=user indexes $HOME/app/indexes
 
 # install git
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git && \
-    apt-get install -y git-lfs
+RUN sudo apt-get update && \
+    sudo apt-get upgrade -y && \
+    sudo apt-get install -y git && \
+    sudo apt-get install -y git-lfs
 
 # Copy git lfs files
 RUN git clone --no-checkout --depth 1 https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot
