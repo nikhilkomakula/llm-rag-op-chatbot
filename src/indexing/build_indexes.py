@@ -37,6 +37,7 @@ def load_embedding_model():
         encode_kwargs={
             "normalize_embeddings": True
         },  # set True to compute cosine similarity
+        cache_folder="./.cache"
     )
 
     # To get the value of the max sequence_length, we will query the underlying `SentenceTransformer` object used in the RecursiveCharacterTextSplitter.
