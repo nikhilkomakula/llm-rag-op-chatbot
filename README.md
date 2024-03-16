@@ -1,3 +1,17 @@
+---
+title: OpenPages IntelliBot
+emoji: 🤖
+colorFrom: yellow
+colorTo: pink
+sdk: docker
+pinned: true
+license: mit
+---
+
+[![Sync to Hugging Face hub](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml/badge.svg)](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml)
+
+[Try OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+
 # OpenPages IntelliBot
 
 Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered by the state-of-the-art Retrieval-Augmented Generation (RAG) technique and Large Language Model (LLM).
