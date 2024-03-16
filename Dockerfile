@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Expose the secret SECRET_EXAMPLE at buildtime and use its value to clone the repo
 RUN --mount=type=secret,id=HUGGINGFACEHUB_API_TOKEN,mode=0444,required=true \
-    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 /code/llm-rag-op-chatbot1
+    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot2 /code/llm-rag-op-chatbot2
 
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
@@ -39,7 +39,7 @@ COPY --chown=user src $HOME/app/src
 COPY --chown=user indexes $HOME/app/indexes
 
 # Copy git lfs files and pull them
-RUN cd /code/llm-rag-op-chatbot1/indexes && \
+RUN cd /code/llm-rag-op-chatbot2/indexes && \
     git lfs pull -I "indexes/chroma.sqlite3" && \
     cd c607d7bb-5476-4bdc-8df3-36895a74111c && \
     git lfs pull -I "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"
