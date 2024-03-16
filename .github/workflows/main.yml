@@ -18,15 +18,15 @@ jobs:
           apk add git
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: LFS Install
-        run: |
-          apk add git-lfs
-          git lfs install
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: LFS Install
+        run: |
+          apk add git-lfs
+          git lfs install
       
       - name: LFS Track
         run: |
