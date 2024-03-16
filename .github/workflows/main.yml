@@ -18,11 +18,11 @@ jobs:
 
       - name: Reset commit
         run: |
-          git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "data/9.0 administrators_guide.pdf" "indexes/chroma.sqlite3"' --prune-empty --tag-name-filter cat -- --all
+          git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "data/9.0 administrators_guide.pdf" "data/op9_solutions_guide.pdf" "data/op_user_guide.pdf" "indexes/chroma.sqlite3" "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"' --prune-empty --tag-name-filter cat -- --all
       
       - name: LFS Track
         run: |
-          git lfs track "data/9.0 administrators_guide.pdf" "indexes/chroma.sqlite3"
+          git lfs track "data/9.0 administrators_guide.pdf" "data/op9_solutions_guide.pdf" "data/op_user_guide.pdf" "indexes/chroma.sqlite3" "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"
       
       - name: Checkout LFS objects
         run: git lfs checkout
