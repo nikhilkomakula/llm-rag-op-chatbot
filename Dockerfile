@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Expose the secret SECRET_EXAMPLE at buildtime and use its value to clone the repo
 RUN --mount=type=secret,id=HUGGINGFACEHUB_API_TOKEN,mode=0444,required=true \
-    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot2 /code/llm-rag-op-chatbot2
+    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HUGGINGFACEHUB_API_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot3 /code/llm-rag-op-chatbot3
 
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
@@ -43,5 +43,5 @@ ENTRYPOINT ["python", "app.py"]
 
 # Download LFS files
 RUN echo "Downloading LFS files..." && \
-    cd /code/llm-rag-op-chatbot2/indexes && \
+    cd /code/llm-rag-op-chatbot3/indexes && \
     git lfs pull
