@@ -4,10 +4,10 @@ emoji: 🤖
 colorFrom: yellow
 colorTo: pink
 sdk: docker
+app_port: 7860
 pinned: true
 license: mit
 ---
-
 [![Sync to Hugging Face hub](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml/badge.svg)](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml)
 
 [Try OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
@@ -125,7 +125,7 @@ docker logs -f llm-rag-op-chatbot
 
 For any inquiries or feedback, please contact me at [nikhil.komakula@outlook.com](mailto:nikhil.komakula@outlook.com).
 
-## License:	
+## License:
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](LICENSE) file for details.
 
