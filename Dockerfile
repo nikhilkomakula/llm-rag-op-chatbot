@@ -15,8 +15,9 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get install -y git-lfs
 
-# Clone Git Repo
-RUN git clone --depth 1 https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot /code/llm-rag-op-chatbot
+# Expose the secret SECRET_EXAMPLE at buildtime and use its value to clone the repo
+RUN --mount=type=secret,id=HF_TOKEN,mode=0444,required=true \
+    git clone --depth 1 https://nikhilkomakula:$(cat /run/secrets/HF_TOKEN)@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 /code/llm-rag-op-chatbot1
 
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
@@ -37,7 +38,7 @@ COPY --chown=user src $HOME/app/src
 COPY --chown=user indexes $HOME/app/indexes
 
 # Copy git lfs files and pull them
-RUN cd /code/llm-rag-op-chatbot/indexes && \
+RUN cd /code/llm-rag-op-chatbot1/indexes && \
     git lfs pull -I "indexes/chroma.sqlite3" && \
     cd c607d7bb-5476-4bdc-8df3-36895a74111c && \
     git lfs pull -I "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"

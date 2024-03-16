@@ -31,11 +31,11 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git remote add space https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || true
+          git remote add space https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 || true
 
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push --force https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot main
+          git push --force https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot1 main
           exit 0
