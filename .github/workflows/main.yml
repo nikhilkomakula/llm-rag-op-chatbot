@@ -3,51 +3,28 @@ name: Sync to Hugging Face hub
 on:
   push:
     branches: [ main ]
+  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
-    container: alpine:latest
     steps:
-      # Git is required so that actions/checkout does a proper Git checkout
-      # instead of using the GitHub REST API.
-      - name: Install Git in container
-        run: |
-          apk update
-          apk add git
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: LFS Install
-        run: |
-          apk add git-lfs
-          git lfs install
-
-      - name: Reset commit
-        run: |
-          git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "data/*" "indexes/*"' --prune-empty --tag-name-filter cat -- --all
-      
-      - name: LFS Track
-        run: |
-          git lfs track "data/*" "indexes/*"
-      
-      - name: Checkout LFS objects
-        run: git lfs checkout
+          lfs: true
 
       - name: Add remote
         env:
-          HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git remote add space https://nikhilkomakula:${{ secrets.HUGGINGFACEHUB_API_TOKEN }}@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || true
+          git remote add space https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || true
 
       - name: Push to hub
         env:
-          HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HUGGINGFACEHUB_API_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push --force https://nikhilkomakula:${{ secrets.HUGGINGFACEHUB_API_TOKEN }}@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot main
+          git push --force https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot main
           exit 0
