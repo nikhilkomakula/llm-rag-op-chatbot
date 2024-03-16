@@ -30,7 +30,7 @@ jobs:
       
       - name: LFS Track
         run: |
-          git lfs track "data/9.0 administrators_guide.pdf" "indexes/chroma.sqlite3"
+          git lfs track "data/*" "indexes/*"
       
       - name: Checkout LFS objects
         run: git lfs checkout
