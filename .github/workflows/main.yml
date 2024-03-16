@@ -22,11 +22,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          lfs: true
 
       - name: LFS Install
         run: |
           apk add git-lfs
           git lfs install
+
+      - name: Reset commit
+        run: git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "data/*" "indexes/*"' --prune-empty --tag-name-filter cat -- --all
       
       - name: LFS Track
         run: |
