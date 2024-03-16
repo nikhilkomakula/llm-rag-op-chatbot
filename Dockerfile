@@ -3,7 +3,7 @@ FROM python:3.11.5-slim
 WORKDIR /app
 
 # Create a cache directory and grant permissions
-RUN mkdir /.cache && chmod -R 777 /.cache
+RUN mkdir /app/.cache && chmod 777 /app/.cache
 
 # Copy the application files into the container
 COPY app.py requirements.txt /app/
