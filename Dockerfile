@@ -28,8 +28,8 @@ COPY --chown=user src $HOME/app/src
 COPY --chown=user indexes $HOME/app/indexes
 
 # Copy git lfs files
-RUN --chown=user cd $HOME/app/indexes && git lfs pull -I "indexes/chroma.sqlite3"
-RUN --chown=user cd $HOME/app/indexes/c607d7bb-5476-4bdc-8df3-36895a74111c && git lfs pull -I "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"
+RUN cd $HOME/app/indexes && git lfs pull -I "indexes/chroma.sqlite3"
+RUN cd $HOME/app/indexes/c607d7bb-5476-4bdc-8df3-36895a74111c && git lfs pull -I "indexes/c607d7bb-5476-4bdc-8df3-36895a74111c/data_level0.bin"
 
 # Use ENTRYPOINT to specify the command to run when the container starts
 ENTRYPOINT ["python", "app.py"]
