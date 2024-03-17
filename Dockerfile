@@ -28,7 +28,7 @@ ENV HOME=/home/user \
 # Set the working directory to the user's home directory
 WORKDIR $HOME/app
 
-# Expose the secret HUGGINGFACEHUB_API_TOKEN at buildtime and use its value to clone the repo
+# Expose the secret HUGGINGFACEHUB_API_TOKEN at buildtime and use its value to clone the repo 
 RUN --mount=type=secret,id=HUGGINGFACEHUB_API_TOKEN,mode=0444,required=true \
     git clone --depth 1 https://github.com/nikhilkomakula/llm-rag-op-chatbot.git $HOME/app
 
