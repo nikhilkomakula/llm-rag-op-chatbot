@@ -89,9 +89,12 @@ def create_qa_chain(retriever, llm):
     Returns:
         Runnable: Returns qa chain.
     """
+    
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
 
     qa_chain = (
-        {"context": retriever, "query": RunnablePassthrough()}
+        {"context": retriever | format_docs, "query": RunnablePassthrough()}
         | create_prompt_template()
         | llm
         | StrOutputParser()
