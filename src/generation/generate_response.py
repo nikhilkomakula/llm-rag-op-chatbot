@@ -1,4 +1,5 @@
 # import libraries
+import time
 from src.retrieval.retriever_chain import get_base_retriever, load_hf_llm, create_qa_chain
 
 # constants
@@ -45,7 +46,11 @@ def generate_response(message, history):
     """
 
     # invoke chain
+    print("Question:", message)
+    start_time = time.time()
     response = global_qa_chain.invoke(message)
-    print(response)
+    print("Answer:", response)
+    end_time = time.time()
+    print("Response Time:", "{:.2f}".format(round(end_time - start_time, 2)))
 
     return response
