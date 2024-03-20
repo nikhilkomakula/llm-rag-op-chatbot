@@ -48,7 +48,8 @@ def generate_response(message, history):
     # invoke chain
     print("Question:", message)
     start_time = time.time()
-    response = global_qa_chain.invoke(message)
+    query = message
+    response = global_qa_chain.invoke(query)
     print("Answer:", response)
     end_time = time.time()
     print("Response Time:", "{:.2f}".format(round(end_time - start_time, 2)))
