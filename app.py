@@ -4,10 +4,10 @@ import subprocess
 
 # Define functions for Gradio and Streamlit interfaces
 def run_gradio_interface():
-    subprocess.run(["python", "gradio_ui.py"])
+    subprocess.run(["python", "gradio_app.py"])
 
 def run_streamlit_interface():
-    subprocess.run(["streamlit", "run", "streamlit_ui.py"])
+    subprocess.run(["streamlit", "run", "streamlit_app.py"])
     
 def run_rag_evaluate():
     subprocess.run(["python", "eval.py"])
