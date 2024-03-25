@@ -56,6 +56,12 @@ def evaluate_rag(chain_name, rag_chain):
             "Response": answer,
             "Time": "{:.2f}".format(round(end_time - start_time, 2)),
         }
+        
+        print("*" * 100)
+        print("Question:", question)
+        print("Answer:", answer)
+        print("Response Time:", "{:.2f}".format(round(end_time - start_time, 2)))
+        print("*" * 100)
 
         df = pd.concat([df, pd.DataFrame.from_records([row])])
 

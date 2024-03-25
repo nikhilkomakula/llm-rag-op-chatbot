@@ -10,11 +10,12 @@ from ..indexing.build_indexes import retrieve_indexes
 
 
 # instantiate base retriever
-def get_base_retriever(k=4, search_type="mmr"):
+def get_base_retriever(embedding_model, k=4, search_type="mmr"):
     """
     Instantiates base retriever.
 
     Args:
+        embedding_model(str): Hugging Face Embedding Model name.
         k (int, optional): Top k results to retrieve. Defaults to 4.
         search_type (str, optional): Search type (mmr or similarity). Defaults to 'mmr'.
 
@@ -23,7 +24,7 @@ def get_base_retriever(k=4, search_type="mmr"):
     """
 
     # get the vector store of indexes
-    vector_store = retrieve_indexes()
+    vector_store = retrieve_indexes(embedding_model)
 
     base_retriever = vector_store.as_retriever(
         search_type=search_type, search_kwargs={"k": k}

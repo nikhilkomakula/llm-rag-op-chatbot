@@ -8,3 +8,4 @@ sentence-transformers==2.5.1
 tensorflow==2.16.1
 gradio==4.21.0
 pandas==2.2.1
+streamlit==1.32.2

@@ -1,11 +1,11 @@
 # import libraries
 import os
-from typing import List, Optional
+from typing import List
 from transformers import AutoTokenizer
 from langchain_community.vectorstores import Chroma
 from sentence_transformers import SentenceTransformer
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings, HuggingFaceInferenceAPIEmbeddings
 from langchain.docstore.document import Document
 
 # import functions
@@ -13,13 +13,15 @@ from ..data.load_dataset import load_documents
 
 # constants
 INDEX_DIR = "indexes/"
-EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
 
 
 # instantiate embedding model
-def load_embedding_model():
+def load_embedding_model(embedding_model):
     """
     Load the embedding model.
+    
+    Args:
+        embedding_model(str): Hugging Face Embedding Model name.
 
     Returns:
         HuggingFaceBgeEmbeddings: Returns the embedding model.
@@ -32,7 +34,7 @@ def load_embedding_model():
     print("device:", device)
 
     hf_bge_embeddings = HuggingFaceBgeEmbeddings(
-        model_name=EMBEDDING_MODEL,
+        model_name=embedding_model,
         model_kwargs={"device": device},
         encode_kwargs={
             "normalize_embeddings": True # set True to compute cosine similarity
@@ -41,17 +43,31 @@ def load_embedding_model():
 
     # To get the value of the max sequence_length, we will query the underlying `SentenceTransformer` object used in the RecursiveCharacterTextSplitter.
     print(
-        f"Model's maximum sequence length: {SentenceTransformer(EMBEDDING_MODEL).max_seq_length}"
+        f"Model's maximum sequence length: {SentenceTransformer(embedding_model).max_seq_length}"
     )
 
     return hf_bge_embeddings
+
+# instantiate embedding model
+def load_inference_embedding_model(embedding_model):
+    """
+    Load the inference embedding model.
+    
+    Args:
+        embedding_model(str): Hugging Face Embedding Model name.
+
+    Returns:
+        HuggingFaceInferenceAPIEmbeddings: Returns the inference embedding model.
+    """
+    hf_inference_bge_embeddings = HuggingFaceInferenceAPIEmbeddings(model_name=embedding_model, api_key=os.environ["HUGGINGFACEHUB_API_TOKEN"])
+    return hf_inference_bge_embeddings
 
 
 # split documents
 def chunk_documents(
     chunk_size: int,
     knowledge_base: List[Document],
-    tokenizer_name: Optional[str] = EMBEDDING_MODEL,
+    tokenizer_name: str,
 ) -> List[Document]:
     """
     Split documents into chunks of maximum size `chunk_size` tokens and return a list of documents.
@@ -90,9 +106,12 @@ def chunk_documents(
 
 
 # generate indexes
-def generate_indexes():
+def generate_indexes(embedding_model):
     """
     Generates indexes.
+    
+    Args:
+        embedding_model(str): Hugging Face Embedding Model name.
 
     Returns:
         ChromaCollection: Returns vector store.
@@ -104,16 +123,16 @@ def generate_indexes():
     # chunk documents to honor the context length
     chunked_documents = chunk_documents(
         SentenceTransformer(
-            EMBEDDING_MODEL
+            embedding_model
         ).max_seq_length,  # We choose a chunk size adapted to our model
         documents,
-        tokenizer_name=EMBEDDING_MODEL,
+        tokenizer_name=embedding_model,
     )
 
     # save indexes to disk
     vector_store = Chroma.from_documents(
         documents=chunked_documents,
-        embedding=load_embedding_model(),
+        embedding=load_embedding_model(embedding_model),
         collection_metadata={"hnsw:space": "cosine"},
         persist_directory=INDEX_DIR,
     )
@@ -122,24 +141,30 @@ def generate_indexes():
 
 
 # load indexes from disk
-def load_indexes():
+def load_indexes(embedding_model):
     """
     Loads indexes into memory.
+    
+    Args:
+        embedding_model(str): Hugging Face Embedding Model name.
 
     Returns:
         ChromaCollection: Returns vector store.
     """
 
     vector_store = Chroma(
-        persist_directory=INDEX_DIR, embedding_function=load_embedding_model()
+        persist_directory=INDEX_DIR, embedding_function=load_inference_embedding_model(embedding_model)
     )
     return vector_store
 
 
 # retrieve vector store
-def retrieve_indexes():
+def retrieve_indexes(embedding_model):
     """
     Retrieves indexes.
+    
+    Args:
+        embedding_model(str): Hugging Face Embedding Model name.
 
     Returns:
         ChromaCollection: Returns vector store.
@@ -147,7 +172,7 @@ def retrieve_indexes():
 
     if [f for f in os.listdir(INDEX_DIR) if not f.startswith(".")] == []:
         print("Generating indexes...")
-        return generate_indexes()
+        return generate_indexes(embedding_model)
     else:
         print("Loading existing indexes!")
-        return load_indexes()
+        return load_indexes(embedding_model)

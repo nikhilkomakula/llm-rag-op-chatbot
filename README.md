@@ -113,6 +113,14 @@ docker ps -a
 docker logs -f llm-rag-op-chatbot
 ```
 
+## REST API:
+
+**Note:** Navigate to the chat interface UI in the browser and locate `Use via API` and click on it. A fly over opens on the right hand side. Capture the URL under the title named `API documentation`.
+
+* **URL:** `<http|https>`://`<hostname`:`<port>`/run/chat
+* **METHOD:** POST
+* **BODY:** { "data": ["`<query>`", ""] }
+
 ## Technologies Used:
 
 * **PDF Parser :** PyMuPDFLoader

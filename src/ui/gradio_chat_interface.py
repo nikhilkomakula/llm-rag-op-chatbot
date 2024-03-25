@@ -6,7 +6,7 @@ from src.test.eval_rag import load_eval_questions
 
 
 # create chatbot interface
-def create_chatinterface(generate_response):
+def create_gradio_chatinterface(generate_response):
     """
     Instantiates the gradio chat interface.
 
