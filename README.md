@@ -10,7 +10,9 @@ license: mit
 ---
 [![Sync to Hugging Face hub](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml/badge.svg)](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml)
 
-[Try OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+[Try &#39;Gradio&#39; OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+
+[Try &#39;Streamlit&#39; OpenPages IntelliBot Here!](https://nk-openpages-intellibot.streamlit.app)
 
 # OpenPages IntelliBot
 
@@ -83,8 +85,28 @@ python install -r requirements.txt
 
 **Step 4:** Run the application
 
+* Gradio
+
 ```python
-python app.py
+python app.py -gradio
+```
+
+    OR
+
+```python
+python gradio_app.py
+```
+
+* Streamlit
+
+```python
+python app.py -streamlit
+```
+
+    OR
+
+```python
+streamlit run streamlit_app.py
 ```
 
 ## Build and Run Container Locally:
@@ -113,7 +135,7 @@ docker ps -a
 docker logs -f llm-rag-op-chatbot
 ```
 
-## REST API:
+## REST API (Gradio):
 
 **Note:** Navigate to the chat interface UI in the browser and locate `Use via API` and click on it. A fly over opens on the right hand side. Capture the URL under the title named `API documentation`.
 
@@ -128,6 +150,26 @@ docker logs -f llm-rag-op-chatbot
 * **Orchestration Framework :** LangChain
 * **Embedding Model :** BAAI/bge-large-en-v1.5
 * **Large Language Model :** huggingfaceh4/zephyr-7b-beta
+* **UI Framework** : Streamlit & Gradio
+
+## Streamlit.io Deployment:
+
+If you are encountering issues with `sqlite` version, then run the following steps:
+
+* Add the following dependency to `requirements.txt`:
+
+    `pysqlite3-binary==0.5.2.post3`
+
+* Add the following block of code to `streamlit_app.py` at the beginning of the file:
+
+```
+# code to fix the issue with sqllite version on streamlit.io
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+```
+
+**Note:** If running locally for Streamlit UI interace and if you hit any errors with `pysqlite3`, try removing whatever that is mentioned above.
 
 ## Contact Me:
 
