@@ -10,15 +10,17 @@ license: mit
 ---
 [![Sync to Hugging Face hub](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml/badge.svg)](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml)
 
-[Try &#39;Gradio&#39; OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
-
-[Try &#39;Streamlit&#39; OpenPages IntelliBot Here!](https://nk-openpages-intellibot.streamlit.app)
-
 # OpenPages IntelliBot
 
 Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered by the state-of-the-art Retrieval-Augmented Generation (RAG) technique and Large Language Model (LLM).
 
-## What is OpenPagesIntelliBot?
+**Gradio:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+
+**Streamlit:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://nk-openpages-intellibot.streamlit.app)
+
+
+## 
+    What is OpenPagesIntelliBot?
 
 OpenPagesIntelliBot leverages cutting-edge AI technologies to provide you with instant and accurate responses about OpenPages, its features, solutions / modules it offers and its trigger framework. By combining the power of RAG and Zephyr LLM, OpenPagesIntelliBot ensures that you receive contextually relevant information.
 
