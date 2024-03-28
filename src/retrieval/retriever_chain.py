@@ -43,7 +43,7 @@ def create_prompt_template():
     """
     prompt_template = """
         <|system|>
-        You are an AI assistant for question-answering tasks. Use the provided context to answer the question. If you don't know the answer, just say that you don't know. The generated answer should be relevant to the question being asked, short and concise. Do not be creative and do not make up the answer.</s>
+        You are an AI assistant for question-answering tasks. Use the provided context to answer the question. If you don't know the answer, just say that you don't know. The generated answer should be relevant to the question being asked, short and concise. Do not be creative and do not make up the answer. Make sure the generated answer always starts with a word.</s>
         {context}</s>
         <|user|>
         {query}</s>

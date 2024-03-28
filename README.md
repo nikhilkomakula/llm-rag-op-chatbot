@@ -19,8 +19,7 @@ Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered 
 **Streamlit:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://nk-openpages-intellibot.streamlit.app)
 
 
-## 
-    What is OpenPagesIntelliBot?
+## What is OpenPagesIntelliBot?
 
 OpenPagesIntelliBot leverages cutting-edge AI technologies to provide you with instant and accurate responses about OpenPages, its features, solutions / modules it offers and its trigger framework. By combining the power of RAG and Zephyr LLM, OpenPagesIntelliBot ensures that you receive contextually relevant information.
 
