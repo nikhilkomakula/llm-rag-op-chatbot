@@ -1,3 +1,8 @@
+# code to fix the issue with sqllite version on streamlit.io
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 # import libraries
 import os
 import streamlit as st
