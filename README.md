@@ -10,17 +10,19 @@ license: mit
 ---
 [![Sync to Hugging Face hub](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml/badge.svg)](https://github.com/nikhilkomakula/llm-rag-op-chatbot/actions/workflows/main.yml)
 
-[Try OpenPages IntelliBot Here!](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
-
 # OpenPages IntelliBot
 
 Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered by the state-of-the-art Retrieval-Augmented Generation (RAG) technique and Large Language Model (LLM).
 
-## What is OpenPagesIntelliBot?
+****Streamlit:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://nk-openpages-intellibot.streamlit.app)**
+
+**Gradio:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+
+## What is OpenPages IntelliBot?
 
 OpenPagesIntelliBot leverages cutting-edge AI technologies to provide you with instant and accurate responses about OpenPages, its features, solutions / modules it offers and its trigger framework. By combining the power of RAG and Zephyr LLM, OpenPagesIntelliBot ensures that you receive contextually relevant information.
 
-## How RAG Works?
+## How Retrieval-Augmented Generation (RAG) Works?
 
 ![RAG Diagram](images/RAG_workflow.png)
 
@@ -83,8 +85,28 @@ python install -r requirements.txt
 
 **Step 4:** Run the application
 
+* Gradio
+
 ```python
-python app.py
+python app.py -gradio
+```
+
+    OR
+
+```python
+python gradio_app.py
+```
+
+* Streamlit
+
+```python
+python app.py -streamlit
+```
+
+    OR
+
+```python
+streamlit run streamlit_app.py
 ```
 
 ## Build and Run Container Locally:
@@ -113,13 +135,67 @@ docker ps -a
 docker logs -f llm-rag-op-chatbot
 ```
 
+## RAG Evaluation:
+
+Used [DeepEval](https://github.com/confident-ai/deepeval) open-source LLM evaluation framework for evaluating the performance of the RAG pipeline. Below metrics are used to evaluate its performance:
+
+* **Answer Relevancy:** Measures the quality of your RAG pipeline's generator by evaluating how relevant the `actual_output` of your LLM application is compared to the provided `input`.
+* **Faithfulness:** Measures the quality of your RAG pipeline's generator by evaluating whether the `actual_output` factually aligns with the contents of your `retrieval_context`.
+* **Contextual Relevancy:** Measures the quality of your RAG pipeline's retriever by evaluating the overall relevance of the information presented in your `retrieval_context` for a given `input`.
+* **Hallucination:** Determines whether your LLM generates factually correct information by comparing the `actual_output` to the provided `context`.
+* **Bias:** Determines whether your LLM output contains gender, racial, or political bias.
+* **Toxicity:** Evaluates toxicness in your LLM outputs.
+
+## REST API (Gradio Only):
+
+**Note:** Navigate to the chat interface UI in the browser and locate `Use via API` and click on it. A fly over opens on the right hand side. Capture the URL under the title named `API documentation`.
+
+* **URL:** `<http|https>`://`<hostname`:`<port>`/run/chat
+* **METHOD:** POST
+* **BODY:** { "data": ["`<query>`", ""] }
+
 ## Technologies Used:
 
 * **PDF Parser :** PyMuPDFLoader
 * **Vector Database :** ChromaDB
 * **Orchestration Framework :** LangChain
 * **Embedding Model :** BAAI/bge-large-en-v1.5
-* **Large Language Model :** huggingfaceh4/zephyr-7b-beta
+* **Large Language Model :** huggingfaceh4/zephyr-7b-alpha
+* **UI Framework** : Streamlit & Gradio
+
+## CI/CD:
+
+* **Streamlit.io**
+  * Committing any changes to the git branch `deploy-to-streamlit` will deploy to streamlit.io.
+* **Hugging Face Spaces**
+  * Committing any changes to the git branch `deploy-to-hf-spaces` will deploy to Hugging Face Spaces as a Docker space.
+
+## Streamlit.io Deployment:
+
+If you are encountering issues with `sqlite` version, then run the following steps:
+
+* Add the following dependency to `requirements.txt`:
+
+  `pysqlite3-binary==0.5.2.post3`
+* Add the following block of code to `streamlit_app.py` at the beginning of the file:
+
+```
+# code to fix the issue with sqllite version on streamlit.io
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+```
+
+**Note:** If running locally for Streamlit UI interace and if you hit any errors with `pysqlite3`, try removing whatever that is mentioned above.
+
+## Enhancements:
+
+* Different advanced retrieval methods could be used.
+* Context re-ranking can be implemented.
+* Latest LLMs could be used for better performance.
+* Could be converted to `conversational` AI chatbot.
+* Utilize better PDF parsers and experiment with `chunk_size` and `chunk_overlap` properties.
+* Fine-tuning the LLM on the proprietary dataset might improve the results.
 
 ## Contact Me:
 

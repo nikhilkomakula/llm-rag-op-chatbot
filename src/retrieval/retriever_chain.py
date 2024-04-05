@@ -1,20 +1,21 @@
 # import libraries
-import os
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableParallel
 
 # import functions
 from ..indexing.build_indexes import retrieve_indexes
 
 
 # instantiate base retriever
-def get_base_retriever(k=4, search_type="mmr"):
+def get_base_retriever(embedding_model, k=4, search_type="mmr"):
     """
     Instantiates base retriever.
 
     Args:
+        embedding_model(str): Hugging Face Embedding Model name.
         k (int, optional): Top k results to retrieve. Defaults to 4.
         search_type (str, optional): Search type (mmr or similarity). Defaults to 'mmr'.
 
@@ -23,7 +24,7 @@ def get_base_retriever(k=4, search_type="mmr"):
     """
 
     # get the vector store of indexes
-    vector_store = retrieve_indexes()
+    vector_store = retrieve_indexes(embedding_model)
 
     base_retriever = vector_store.as_retriever(
         search_type=search_type, search_kwargs={"k": k}
@@ -42,7 +43,7 @@ def create_prompt_template():
     """
     prompt_template = """
         <|system|>
-        You are an AI assistant for question-answering tasks. Use the provided context to answer the question. If you don't know the answer, just say that you don't know. The generated answer should be relevant to the question being asked, short and concise. Do not be creative and do not make up the answer.</s>
+        You are an AI assistant for question-answering tasks. Use the provided context to answer the question. If you don't know the answer, just say that you don't know. The generated answer should be relevant to the question being asked, short and concise. Do not be creative and do not make up the answer. Make sure the generated answer always starts with a word.</s>
         {context}</s>
         <|user|>
         {query}</s>
@@ -89,7 +90,7 @@ def create_qa_chain(retriever, llm):
     Returns:
         Runnable: Returns qa chain.
     """
-    
+
     def format_docs(docs):
         return "\n\n".join(doc.page_content for doc in docs)
 
@@ -100,3 +101,33 @@ def create_qa_chain(retriever, llm):
         | StrOutputParser()
     )
     return qa_chain
+
+
+# define retrieval chain for evaluation
+def create_qa_chain_eval(retriever, llm):
+    """
+    Instantiates qa chain for evaluation.
+
+    Args:
+        retriever (VectorStoreRetriever): Vector store.
+        llm (HuggingFaceEndpoint): HuggingFace endpoint.
+
+    Returns:
+        Runnable: Returns qa chain.
+    """
+
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+    rag_chain_from_docs = (
+        RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
+        | create_prompt_template()
+        | llm
+        | StrOutputParser()
+    )
+
+    rag_chain_with_source = RunnableParallel(
+        {"context": retriever, "query": RunnablePassthrough()}
+    ).assign(result=rag_chain_from_docs)
+
+    return rag_chain_with_source
