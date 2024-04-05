@@ -10,7 +10,7 @@ def run_streamlit_interface():
     subprocess.run(["streamlit", "run", "streamlit_app.py"])
     
 def run_rag_evaluate():
-    subprocess.run(["python", "eval.py"])
+    subprocess.run(["python", "eval_app.py"])
 
 # Main function to determine which interface to run
 def main():

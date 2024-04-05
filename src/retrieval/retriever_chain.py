@@ -1,9 +1,9 @@
 # import libraries
-import os
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.llms import HuggingFaceEndpoint
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableParallel
 
 # import functions
 from ..indexing.build_indexes import retrieve_indexes
@@ -90,7 +90,7 @@ def create_qa_chain(retriever, llm):
     Returns:
         Runnable: Returns qa chain.
     """
-    
+
     def format_docs(docs):
         return "\n\n".join(doc.page_content for doc in docs)
 
@@ -101,3 +101,33 @@ def create_qa_chain(retriever, llm):
         | StrOutputParser()
     )
     return qa_chain
+
+
+# define retrieval chain for evaluation
+def create_qa_chain_eval(retriever, llm):
+    """
+    Instantiates qa chain for evaluation.
+
+    Args:
+        retriever (VectorStoreRetriever): Vector store.
+        llm (HuggingFaceEndpoint): HuggingFace endpoint.
+
+    Returns:
+        Runnable: Returns qa chain.
+    """
+
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+    rag_chain_from_docs = (
+        RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
+        | create_prompt_template()
+        | llm
+        | StrOutputParser()
+    )
+
+    rag_chain_with_source = RunnableParallel(
+        {"context": retriever, "query": RunnablePassthrough()}
+    ).assign(result=rag_chain_from_docs)
+
+    return rag_chain_with_source
