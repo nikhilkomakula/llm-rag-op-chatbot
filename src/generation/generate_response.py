@@ -106,7 +106,7 @@ def generate_response_streamlit(message: str, history: Optional[dict]):
     """
 
     response = generate_response(message)
-    response = response.replace("\n", "  \n")
+    response = response.replace("$", "\$").replace("\n", "  \n")
     for word in response.split(" "):
         yield word + " "
         time.sleep(0.05)
