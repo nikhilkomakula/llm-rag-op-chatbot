@@ -1,7 +1,9 @@
 # import libraries
 import time
 from typing import Optional
-from src.retrieval.retriever_chain import get_base_retriever, load_hf_llm, create_qa_chain
+
+# import functions
+from src.retrieval.retriever_chain import get_base_retriever, load_hf_llm, create_qa_chain, create_qa_chain_eval
 
 # constants
 HF_MODEL        = "huggingfaceh4/zephyr-7b-alpha"  # "mistralai/Mistral-7B-Instruct-v0.2" # "google/gemma-7b"
@@ -104,7 +106,7 @@ def generate_response_streamlit(message: str, history: Optional[dict]):
     """
 
     response = generate_response(message)
-    response = response.replace("\n", "  \n")
+    response = response.replace("$", "\$").replace(":", "\:").replace("\n", "  \n")
     for word in response.split(" "):
         yield word + " "
         time.sleep(0.05)
@@ -139,3 +141,23 @@ def has_global_variable():
         return True
     
     return False
+
+# get the qa chain for evaluation
+def get_qa_chain_eval():
+    """
+    Instantiates QA Chain for evaluation.
+
+    Returns:
+        Runnable: Returns an instance of QA Chain.
+    """
+
+    # get retriever
+    retriever = get_base_retriever(embedding_model=EMBEDDING_MODEL, k=4, search_type="mmr")
+
+    # instantiate llm
+    llm = load_hf_llm(repo_id=HF_MODEL, max_new_tokens=512, temperature=0.4)
+
+    # instantiate qa chain
+    qa_chain = create_qa_chain_eval(retriever, llm)
+
+    return qa_chain
