@@ -1,0 +1,41 @@
+name: Sync to Hugging Face hub
+
+on:
+  push:
+    branches: [ deploy-to-hf-spaces ]
+  # to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Reset commit
+        run: |
+          git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "data/*" "indexes/*"' --prune-empty --tag-name-filter cat -- --all
+      
+      - name: LFS Track
+        run: |
+          git lfs track "data/*" "indexes/*"
+      
+      - name: Checkout LFS objects
+        run: git lfs checkout
+
+      - name: Add remote
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add space https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot || true
+
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git push --force https://nikhilkomakula:$HF_TOKEN@huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot main
+          exit 0
