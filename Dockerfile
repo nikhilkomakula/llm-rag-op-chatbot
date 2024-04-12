@@ -29,7 +29,7 @@ ENV HOME=/home/user \
 WORKDIR $HOME/app
 
 # Clone the Git repo 
-RUN git clone --depth 1 https://github.com/nikhilkomakula/llm-rag-op-chatbot.git $HOME/app
+RUN git clone --depth 1 -b deploy-to-hf-spaces https://github.com/nikhilkomakula/llm-rag-op-chatbot.git $HOME/app
 
 # Use ENTRYPOINT to specify the command to run when the container starts
 ENTRYPOINT ["python", "gradio_app.py"]
