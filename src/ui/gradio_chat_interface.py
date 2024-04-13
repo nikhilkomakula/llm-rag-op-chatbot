@@ -1,5 +1,5 @@
 # import libraries
-import gradio_app as gr
+import gradio as gr
 
 # import functions
 from src.test.eval_rag import load_eval_questions
