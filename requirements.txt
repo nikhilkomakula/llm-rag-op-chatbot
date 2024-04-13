@@ -9,4 +9,4 @@ tensorflow==2.16.1
 gradio==4.21.0
 pandas==2.2.1
 streamlit==1.32.2
-pysqlite3-binary==0.5.2.post3
+deepeval==0.21.25
