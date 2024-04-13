@@ -16,7 +16,7 @@ Welcome to OpenPages IntelliBot, your intelligent and efficient chatbot powered 
 
 ****Streamlit:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://nk-openpages-intellibot.streamlit.app)**
 
-**Gradio:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://huggingface.co/spaces/nikhilkomakula/llm-rag-op-chatbot)
+**Gradio:** [![Try it!](https://img.shields.io/badge/Try_it!-blue.svg)](https://huggingface.co/spaces/nikhilkomakula/nk-openpages-intellibot)
 
 ## What is OpenPages IntelliBot?
 
