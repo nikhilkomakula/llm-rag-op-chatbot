@@ -5,7 +5,7 @@ import datetime
 import pandas as pd
 
 # import functions
-from src.test.eval_custom_model import LLM, eval_rag_metrics
+# from src.test.eval_custom_model import LLM, eval_rag_metrics
 from src.retrieval.retriever_chain import load_hf_llm
 
 # constants
@@ -68,7 +68,7 @@ def evaluate_rag(chain_name, rag_chain):
     hf_eval_llm = load_hf_llm(repo_id=EVAL_LLM, max_new_tokens=512, temperature=0.4)
 
     # instantiate deepeval llm
-    eval_custom_model = LLM(model_name=EVAL_LLM_NAME, model=hf_eval_llm)
+    # eval_custom_model = LLM(model_name=EVAL_LLM_NAME, model=hf_eval_llm)
 
     for question in eval_questions:
 
@@ -80,7 +80,7 @@ def evaluate_rag(chain_name, rag_chain):
         query = response['query']
         answer = response['result']
         context = format_docs_as_list(response['context'])
-        metrics = eval_rag_metrics(eval_custom_model, question, answer, context)
+        metrics = "" # eval_rag_metrics(eval_custom_model, question, answer, context)
 
         row = {
             "Chain": chain_name,

@@ -6,7 +6,7 @@ from typing import Optional
 from src.retrieval.retriever_chain import get_base_retriever, load_hf_llm, create_qa_chain, create_qa_chain_eval
 
 # constants
-HF_MODEL        = "huggingfaceh4/zephyr-7b-alpha"  # "mistralai/Mistral-7B-Instruct-v0.2" # "google/gemma-7b"
+HF_MODEL        = "huggingfaceh4/zephyr-7b-beta"  # "mistralai/Mistral-7B-Instruct-v0.2" # "google/gemma-7b"
 EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
 
 
@@ -106,7 +106,7 @@ def generate_response_streamlit(message: str, history: Optional[dict]):
     """
 
     response = generate_response(message)
-    response = response.replace("\n", "  \n")
+    response = response.replace("$", "\$").replace(":", "\:").replace("\n", "  \n")
     for word in response.split(" "):
         yield word + " "
         time.sleep(0.05)
