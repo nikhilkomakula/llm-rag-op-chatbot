@@ -188,6 +188,13 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 **Note:** If running locally for Streamlit UI interace and if you hit any errors with `pysqlite3`, try removing whatever that is mentioned above.
 
+## Hugging Face Docker Space Deployment:
+
+* On Hugging Face Docker Space, while installing dependencies, it fails due to dependency conflict. To resolve that, exclude `deepeval` from dependencies and comment out the below listed statements in `eval_rag.py`:
+  * `from src.test.eval_custom_model import LLM, eval_rag_metrics`
+  * `eval_custom_model = LLM(model_name=EVAL_LLM_NAME, model=hf_eval_llm)`
+  * `metrics = eval_rag_metrics(eval_custom_model, question, answer, context)` (set to blank)
+
 ## Enhancements:
 
 * Different advanced retrieval methods could be used.
